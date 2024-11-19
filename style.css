@@ -1,0 +1,13 @@
+body{
+    background-color: aquamarine;
+}
+
+img{
+    /* max-width: 1080px; */
+    max-width: 680px;
+    max-height: 440px;
+    /* aspect-ratio: 9 / 16; */
+    /* aspect-ratio: 16 / 9; */
+    /* image-rendering: pixelated; */
+}
+
