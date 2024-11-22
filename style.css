@@ -1,13 +1,24 @@
-body{
-    background-color: aquamarine;
+body {
+  margin: 0;
+  background-color: aquamarine;
+  text-align: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-img{
-    /* max-width: 1080px; */
-    max-width: 680px;
-    max-height: 440px;
-    /* aspect-ratio: 9 / 16; */
-    /* aspect-ratio: 16 / 9; */
-    /* image-rendering: pixelated; */
+#outputCanvas {
+  border: 2px solid red; /* Add a border to the canvas */
+  box-sizing: border-box;
 }
 
+#canvasContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 2em;
+  padding: 2em;
+  visibility: hidden;
+}
+
+p {
+  font-size: large;
+  font-weight: 800;
+}

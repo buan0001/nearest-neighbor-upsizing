@@ -1,64 +1,105 @@
 // document.querySelector("#myImage").addEventListener("load", start);
 window.addEventListener("load", start);
 
-async function start() {
-  //   const htmlImg = document.querySelector("#myImage");
-  //   console.log(htmlImg.height);
-  //   console.log(htmlImg.width);
+function start() {
+  document.querySelector("#upload").addEventListener("change", test);
+  // document.querySelector("#canvasContainer").hidden = true
+  document.querySelector("#canvasContainer").style.visibility = "hidden";
+}
 
-  const IMAGE_HEIGHT = 550;
-  const IMAGE_WIDTH = 550;
-  const PIXEL_SIZE = 4;
+function test(event) {
+  const file = event.target.files[0];
+  console.log(file);
+  if (file) {
+    const img = new Image();
+    img.onload = () => {
+      console.log(img);
+      console.log(img.height);
+      
+    };
+    img.src = URL.createObjectURL(file);
+  }
+  document.querySelector("#canvasContainer").style.visibility = "visible";
+}
+
+async function nearestNeighbourScaling() {
+  
+  // Make all of these input values
+  const HEIGHT_WIDTH_RATIO = 9 / 16;
+  const START_WIDTH = 250;
+  const START_HEIGHT = START_WIDTH;
+  // const START_HEIGHT = START_WIDTH * HEIGHT_WIDTH_RATIO;
+
+  const UPSCALING_NUMBER = 3;
+  const END_WIDTH = START_WIDTH * UPSCALING_NUMBER;
+  const END_HEIGHT = START_HEIGHT * UPSCALING_NUMBER;
+  // const END_HEIGHT = 550 * HEIGHT_WIDTH_RATIO
+  const PIXEL_SIZE = END_WIDTH / START_WIDTH;
 
   const myImage = new Image();
   myImage.src = "/skål fra lise.jpg";
-  myImage.height = IMAGE_HEIGHT;
-  myImage.width = IMAGE_WIDTH;
+  myImage.height = START_HEIGHT;
+  myImage.width = START_WIDTH;
 
   myImage.onload = () => {
-    const myCanvas = document.querySelector("#myCanvas");
-    const inputCtx = myCanvas.getContext("2d");
-    myCanvas.width = myImage.width;
-    myCanvas.height = myImage.height;
+    const inputCanvas = document.querySelector("#inputCanvas");
+    const inputCtx = inputCanvas.getContext("2d");
+    inputCanvas.width = myImage.width;
+    inputCanvas.height = myImage.height;
 
-    inputCtx.drawImage(myImage, 0, 0, myCanvas.width, myCanvas.height);
+    inputCtx.drawImage(myImage, 0, 0, inputCanvas.width, inputCanvas.height);
 
-    const imageData = inputCtx.getImageData(0, 0, myImage.width, myImage.height);
-    const inputPixels = imageData.data;
+    const inputData = inputCtx.getImageData(0, 0, myImage.width, myImage.height);
+    const inputPixels = inputData.data;
+    console.log(inputPixels);
 
-    
-    const outputCanvas = document.getElementById("outputCanvas");
+    const outputCanvas = document.querySelector("#outputCanvas");
     const outputCtx = outputCanvas.getContext("2d");
-    outputCanvas.width = IMAGE_WIDTH;
-    outputCanvas.height = IMAGE_HEIGHT;
+    outputCanvas.width = END_WIDTH;
+    outputCanvas.height = END_HEIGHT;
 
-    const outputData = outputCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    const outputData = outputCtx.createImageData(END_WIDTH, END_HEIGHT);
     const outputPixels = outputData.data;
+    console.log(outputData);
 
-    const pixelsToOverride = 12;
-    for (let y = 0; y < IMAGE_HEIGHT; y += pixelsToOverride) {
-      for (let x = 0; x < IMAGE_WIDTH; x += pixelsToOverride) {
-        if ( x === IMAGE_WIDTH || y === 0 || y === IMAGE_HEIGHT - 1) {
-          continue;
+    let outputX = 0;
+    let outputY = 0;
+    function drawStep() {
+      let iterations = 0;
+      while (iterations < 500) {
+        if (outputY >= END_HEIGHT) {
+          outputCanvas.style.border = "0px";
+          console.log("returning");
+          return;
         }
-        const index = (y * IMAGE_WIDTH + x) * 4;
+        const originalX = Math.round(outputX / UPSCALING_NUMBER);
+        const originalY = Math.round(outputY / UPSCALING_NUMBER);
+        // Multiply by 4 since that's the amount of array indexes used to represent a pixel value
+        const index = (originalY * START_WIDTH + originalX) * 4;
+
         const [r, g, b, a] = inputPixels.slice(index, index + 4);
-        // Set the pixel below and the pixel to the right of that pixel to the current pixels values
-        for (let dy = 0; dy < pixelsToOverride; dy++) {
-          for (let dx = 0; dx < pixelsToOverride; dx++) {
-            // const outputIndex = ((inputX + dy) * IMAGE_WIDTH + (inputX + dx)) * 4;
-            const outputIndex = ((y + dy) * IMAGE_WIDTH + (x + dx)) * 4;
-            outputPixels[outputIndex] = r;
-            outputPixels[outputIndex + 1] = g;
-            outputPixels[outputIndex + 2] = b;
-            outputPixels[outputIndex + 3] = a;
-          }
+
+        const outputIndex = (outputY * END_WIDTH + outputX) * 4;
+        outputPixels[outputIndex] = r;
+        outputPixels[outputIndex + 1] = g;
+        outputPixels[outputIndex + 2] = b;
+        outputPixels[outputIndex + 3] = a;
+
+        outputX++;
+        if (outputX >= END_WIDTH) {
+          outputX = 0;
+          outputY++;
         }
+        iterations++;
       }
+      outputCtx.putImageData(outputData, 0, 0);
+
+  
+      requestAnimationFrame(drawStep);
     }
-    outputCtx.putImageData(outputData, 0, 0);
-    const finalData = outputCtx.getImageData(0, 0, myImage.width, myImage.height);
-    console.log(finalData);
+
+    drawStep();
+    console.log(outputPixels);
   };
 }
 
@@ -92,3 +133,25 @@ function boxBlur() {
   //     }
   // }
 }
+
+// const pixelsToOverride = 12;
+// for (let y = 0; y < START_HEIGHT; y += pixelsToOverride) {
+//   for (let x = 0; x < START_WIDTH; x += pixelsToOverride) {
+//     if ( x === START_WIDTH || y === 0 || y === START_HEIGHT - 1) {
+//       continue;
+//     }
+//     const index = (y * START_WIDTH + x) * 4;
+//     const [r, g, b, a] = imageData.slice(index, index + 4);
+//     // Set the pixel below and the pixel to the right of that pixel to the current pixels values
+//     for (let dy = 0; dy < pixelsToOverride; dy++) {
+//       for (let dx = 0; dx < pixelsToOverride; dx++) {
+//         // const outputIndex = ((inputX + dy) * IMAGE_WIDTH + (inputX + dx)) * 4;
+//         const outputIndex = ((y + dy) * START_WIDTH + (x + dx)) * 4;
+//         outputPixels[outputIndex] = r;
+//         outputPixels[outputIndex + 1] = g;
+//         outputPixels[outputIndex + 2] = b;
+//         outputPixels[outputIndex + 3] = a;
+//       }
+//     }
+//   }
+// }

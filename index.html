@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projekt!</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- <img id="myImage" src="skål fra lise.jpg" alt=""> -->
-    <!-- <img id="myImage" src="tiles/door.png" alt=""> -->
-    <canvas id="myCanvas"></canvas>
-    <canvas id="outputCanvas"></canvas>
-</body>
-<script src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="menu">
+      <h1>Upscaling images by nearest neighbor interpolation</h1>
+      <form action="" id="settings">
+        <label for="upload">Upload an image</label>
+        <input type="file" name="upload" id="upload" />
+        <label for="width">Upsize by</label>
+        <input type="number" name="width" placeholder="2 = 2 times as large" />
+        <input type="submit" value="Upsize image" />
+      </form>
+    </div>
+    <div id="canvasContainer">
+      <div>
+        <p>Original</p>
+
+        <canvas id="inputCanvas"></canvas>
+      </div>
+      <div id="outputContainer">
+        <p>Upscaled version</p>
+        <canvas id="outputCanvas"></canvas>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
 </html>
