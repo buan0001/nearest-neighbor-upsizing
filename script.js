@@ -15,7 +15,6 @@ function test(event) {
     img.onload = () => {
       console.log(img);
       console.log(img.height);
-      
     };
     img.src = URL.createObjectURL(file);
   }
@@ -23,7 +22,6 @@ function test(event) {
 }
 
 async function nearestNeighbourScaling() {
-  
   // Make all of these input values
   const HEIGHT_WIDTH_RATIO = 9 / 16;
   const START_WIDTH = 250;
@@ -37,7 +35,8 @@ async function nearestNeighbourScaling() {
   const PIXEL_SIZE = END_WIDTH / START_WIDTH;
 
   const myImage = new Image();
-  myImage.src = "/skål fra lise.jpg";
+  myImage.src = "/å med rødt hus.jpeg";
+  // myImage.src = "/skål fra lise.jpg";
   myImage.height = START_HEIGHT;
   myImage.width = START_WIDTH;
 
@@ -94,7 +93,6 @@ async function nearestNeighbourScaling() {
       }
       outputCtx.putImageData(outputData, 0, 0);
 
-  
       requestAnimationFrame(drawStep);
     }
 
