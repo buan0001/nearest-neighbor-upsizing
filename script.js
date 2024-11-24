@@ -62,7 +62,7 @@ function scaleImage(e) {
   nearestNeighbourScaling(scalingFactor, pixelsPerFrame);
 }
 
-async function nearestNeighbourScaling(scalingFactor, pixelsPerFrame) {
+function nearestNeighbourScaling(scalingFactor, pixelsPerFrame) {
   const END_WIDTH = img.width * scalingFactor;
   const END_HEIGHT = img.height * scalingFactor;
 
@@ -92,8 +92,7 @@ async function nearestNeighbourScaling(scalingFactor, pixelsPerFrame) {
     let iterations = 0;
     while (iterations < pixelsPerFrame) {
       if (outputY >= END_HEIGHT) {
-        outputCanvas.style.border = "0px";
-        console.log("returning");
+        // Make sure to repaint - otherwise the last few pixels will be missing
         outputCtx.putImageData(outputData, 0, 0);
         return;
       }
