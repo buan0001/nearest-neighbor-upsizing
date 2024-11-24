@@ -5,11 +5,6 @@ body {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-#outputCanvas {
-  border: 2px solid red; /* Add a border to the canvas */
-  box-sizing: border-box;
-}
-
 #canvasContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

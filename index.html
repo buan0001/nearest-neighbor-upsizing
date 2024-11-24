@@ -11,9 +11,11 @@
       <h1>Upscaling images by nearest neighbor interpolation</h1>
       <form action="" id="fileForm">
         <label for="imageUpload">Upload an image</label>
-        <input type="file" name="imageUpload" id="upload" />
-        <label for="width">Upsize by</label>
-        <input type="number" name="width" placeholder="2 = 2 times as large" />
+        <input type="file" name="imageUpload" id="imageUpload" required />
+        <label for="scalingFactor">Upsize by</label>
+        <input type="text" name="scalingFactor" placeholder="0.1 - 10" required />
+        <label for="pixelsPerFrame">Pixeleringshastighed</label>
+        <input type="number" name="pixelsPerFrame" placeholder="1-10.000" required />
         <input type="submit" value="Upsize image" />
       </form>
     </div>
