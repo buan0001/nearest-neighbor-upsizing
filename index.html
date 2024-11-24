@@ -9,15 +9,15 @@
   <body>
     <div id="menu">
       <h1>Upscaling images by nearest neighbor interpolation</h1>
-      <form action="" id="settings">
-        <label for="upload">Upload an image</label>
-        <input type="file" name="upload" id="upload" />
+      <form action="" id="fileForm">
+        <label for="imageUpload">Upload an image</label>
+        <input type="file" name="imageUpload" id="upload" />
         <label for="width">Upsize by</label>
         <input type="number" name="width" placeholder="2 = 2 times as large" />
         <input type="submit" value="Upsize image" />
       </form>
     </div>
-    <div id="canvasContainer">
+    <div id="canvasContainer" class="hidden">
       <div>
         <p>Original</p>
 

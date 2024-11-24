@@ -15,10 +15,13 @@ body {
   grid-template-columns: repeat(2, 1fr);
   margin: 2em;
   padding: 2em;
-  visibility: hidden;
 }
 
 p {
   font-size: large;
   font-weight: 800;
+}
+
+.hidden {
+  visibility: hidden;
 }

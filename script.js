@@ -2,24 +2,25 @@
 window.addEventListener("load", start);
 
 function start() {
-  document.querySelector("#upload").addEventListener("change", test);
+  document.querySelector("#imageUpload").addEventListener("change", uploadImage);
+  document.querySelector("#fileForm").addEventListener("submit", scaleImage);
   // document.querySelector("#canvasContainer").hidden = true
-  document.querySelector("#canvasContainer").style.visibility = "hidden";
+  // document.querySelector("#canvasContainer").style.visibility = "hidden";
 }
 
-function test(event) {
+function uploadImage(event) {
   const file = event.target.files[0];
   console.log(file);
   if (file) {
     const img = new Image();
     img.onload = () => {
-      console.log(img);
-      console.log(img.height);
-      
     };
     img.src = URL.createObjectURL(file);
   }
-  document.querySelector("#canvasContainer").style.visibility = "visible";
+}
+
+function scaleImage(){
+
 }
 
 async function nearestNeighbourScaling() {
