@@ -4,7 +4,8 @@
 
 Nearest Neighbor Interpolation is an algorithm used for upscaling images. It's a rather simple way of enlarging images, but works very well in instances where smooth edges aren't necessary - ideal for Pixel Art and the like!
 
-Made by Buster and Lise :)
+Made by Buster and [Lise](https://github.com/LisePetculescu)
+ :)
 
 Screenshot from running application:
 ![img not found](image.png)
